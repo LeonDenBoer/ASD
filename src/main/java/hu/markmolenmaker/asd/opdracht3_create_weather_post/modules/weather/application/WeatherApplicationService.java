@@ -1,5 +1,6 @@
 package hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.application;
 
+import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.adapter.TranslationService;
 import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.domain.event.WeatherEvent;
 import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.domain.report.WeatherReport;
 import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.domain.repository.WeatherEventRepository;
@@ -12,6 +13,8 @@ import java.util.Map;
 @Transactional
 @Service
 public class WeatherApplicationService {
+
+    private TranslationService translationService = new TranslationService();
 
     private final WeatherReportRepository weatherReportRepository;
     private final WeatherEventRepository weatherEventRepository;
@@ -30,4 +33,11 @@ public class WeatherApplicationService {
         weatherEventRepository.store(event);
     }
 
+    public WeatherReport findWeatherReport(String id, String userId) {
+        if(translationService.validateUserRole(userId)){
+            return weatherReportRepository.getWeatherReport(id);
+        }
+
+        return null;
+    }
 }

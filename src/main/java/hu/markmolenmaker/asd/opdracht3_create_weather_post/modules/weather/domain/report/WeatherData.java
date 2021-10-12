@@ -52,4 +52,11 @@ public class WeatherData {
         return airHumidity;
     }
 
+    public String getDetails() {
+        return "Location: " + location.getLatitude() + ", " + location.getLongitude()
+                + "\n Wind data: " + windData.getDirection() + ", " + windData.getWindSpeed()
+                + "\n Temperature data: " + temperatureData.getAirTemperature() + ", " + temperatureData.getGroundTemperature() + ", " + temperatureData.getUnit()
+                + "\n Air pressure: " + airPressure
+                + "\n Air humidity: " + airHumidity;
+    }
 }

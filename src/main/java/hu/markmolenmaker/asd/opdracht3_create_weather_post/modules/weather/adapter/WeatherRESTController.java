@@ -1,11 +1,10 @@
 package hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.adapter;
 
 import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.application.WeatherApplicationService;
+import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.domain.report.WeatherReport;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Map;
 
@@ -29,6 +28,14 @@ public class WeatherRESTController {
             return ResponseEntity.badRequest().body("Upload of WeatherReport failed!");
         }
         return ResponseEntity.ok("Uploaded WeatherReport Successfully!");
+    }
+
+    @GetMapping
+    public ResponseEntity<String> findWeatherReport(@RequestParam("id") String id, @RequestParam("userId")  String userId) {
+        WeatherReport report = weatherApplicationService.findWeatherReport(id, userId);
+        return new ResponseEntity<>(
+                report.getWeatherData().getDetails(),
+                HttpStatus.OK);
     }
 
     public static class WeatherReportDTO {
