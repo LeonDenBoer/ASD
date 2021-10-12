@@ -31,7 +31,7 @@ public class WeatherRESTController {
     }
 
     @GetMapping
-    public ResponseEntity<String> findWeatherReport(@RequestParam("id") String id, @RequestParam("userId")  String userId) {
+    public ResponseEntity<String> findWeatherReport(@RequestParam("id") long id, @RequestParam("userId")  String userId) {
         WeatherReport report = weatherApplicationService.findWeatherReport(id, userId);
         return new ResponseEntity<>(
                 report.getWeatherData().getDetails(),

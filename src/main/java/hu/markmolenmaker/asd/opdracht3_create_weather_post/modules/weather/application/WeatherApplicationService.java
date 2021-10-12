@@ -33,7 +33,7 @@ public class WeatherApplicationService {
         weatherEventRepository.store(event);
     }
 
-    public WeatherReport findWeatherReport(String id, String userId) {
+    public WeatherReport findWeatherReport(long id, String userId) {
         if(translationService.validateUserRole(userId)){
             return weatherReportRepository.getWeatherReport(id);
         }
