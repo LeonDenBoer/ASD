@@ -34,7 +34,10 @@ public class WeatherApplicationService {
     }
 
     public WeatherReport findWeatherReport(String id, String userId) {
-        translationService.validateUserMayReadReport(userId);
-        return weatherReportRepository.getWeatherReport(id);
+        if(translationService.validateUserRole(userId)){
+            return weatherReportRepository.getWeatherReport(id);
+        }
+
+        return null;
     }
 }

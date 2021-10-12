@@ -52,4 +52,8 @@ public class WeatherReport {
         return this.weatherEvent;
     }
 
+    public WeatherData getWeatherData() {
+        return weatherData;
+    }
+
 }

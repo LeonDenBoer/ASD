@@ -2,6 +2,7 @@ package hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.adap
 
 import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.application.WeatherApplicationService;
 import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.domain.report.WeatherReport;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,8 +27,11 @@ public class WeatherRESTController {
     }
 
     @GetMapping
-    public WeatherReport findWeatherReport(String id, String userId) {
-        return weatherApplicationService.findWeatherReport(id, userId);
+    public ResponseEntity<String> findWeatherReport(@RequestParam("id") String id, @RequestParam("userId")  String userId) {
+        WeatherReport report = weatherApplicationService.findWeatherReport(id, userId);
+        return new ResponseEntity<>(
+                report.getWeatherData().getDetails(),
+                HttpStatus.OK);
     }
 
     public static class WeatherReportDTO {
