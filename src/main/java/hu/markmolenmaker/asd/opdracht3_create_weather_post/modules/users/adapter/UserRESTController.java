@@ -11,4 +11,7 @@ public class UserRESTController {
         return true;   // Validates every userId as valid if it contains some value.
     }
 
+    public boolean validateUserRole(String userId) {
+        return true;
+    }
 }

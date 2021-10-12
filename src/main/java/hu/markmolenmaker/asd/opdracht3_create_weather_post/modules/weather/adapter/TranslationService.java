@@ -14,4 +14,7 @@ public class TranslationService {
         return userRESTController.validateUserMaySubmitReport(userId);
     }
 
+    public boolean validateUserRole(String userId) {
+        return userRESTController.validateUserRole(userId);
+    }
 }

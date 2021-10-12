@@ -11,6 +11,5 @@ public interface WeatherReportRepository extends JpaRepository<WeatherReport, Lo
     @Query(nativeQuery=true, value="unused")
     void store(WeatherReport report);
     @Query(nativeQuery=true, value="unused")
-    WeatherReport getWeatherReportBy(long id);
-
+    WeatherReport getWeatherReport(long id);
 }
