@@ -15,7 +15,7 @@ public class EventAttribute {
         this.value = value;
     }
 
-    public double convertFahrenheitToCelsius(String TemperatureScaleType, double fahrenheit){
+    public double convertTemperature(String TemperatureScaleType, double fahrenheit){
         if(TemperatureScaleType.equals("fahrenheit")){
             return (fahrenheit-32)*5/9;
         }

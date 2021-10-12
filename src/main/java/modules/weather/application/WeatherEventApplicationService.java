@@ -16,7 +16,7 @@ public class WeatherEventApplicationService {
         if(eventExits){
             WeatherEvent weatherEvent =  weatherEventRepository.getWeatherEventById(id);
             EventAttribute eventAttribute =  weatherEvent.getEventAttribute();
-            double result = eventAttribute.convertFahrenheitToCelsius(newUnit, value);
+            double result = eventAttribute.convertTemperature(newUnit, value);
 
             eventAttribute.setTemperatureScaleType(newUnit);
             eventAttribute.setValue(result);

@@ -9,7 +9,7 @@ public class EventAttributeTest {
 
     @Test
     public void  testConvertFahrenheitToCelsius() {
-        double result = eventAttribute.convertFahrenheitToCelsius("fahrenheit", 52.3);
+        double result = eventAttribute.convertTemperature("fahrenheit", 52.3);
         assertEquals(11.3, result, 0.3);
     }
 
