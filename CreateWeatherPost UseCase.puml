@@ -1,0 +1,80 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+'ASD Opdracht 2 - 4b(1) JoinCourseAction.joinCourseForInstructor() - v1.0
+
+hide footbox
+autonumber
+
+skinparam BoxPadding 10
+
+title DDD Sequence Diagram - UseCase: CreateWeatherPost
+
+actor Actor
+
+box Weather - Bounded Context #FF
+participant ": WeatherRESTController"          as ReportRESTController        <<adapter>>
+participant ": WeatherApplicationService"      as ReportApplicationService    <<application>>
+participant ": WeatherReportRepository"              as ReportRepository     <<adapter>> <<domain>>
+participant ": WeatherReport"                        as Report                  <<domain>>
+participant ": WeatherData"                          as Data                  <<domain>>
+participant ": WindData"                             as WindData                  <<domain>>
+participant ": TemperatureData"                      as TemperatureData                  <<domain>>
+participant ": Location"                      as Location                  <<domain>>
+participant ": WeatherEventRepository"               as EventRepository      <<adapter>> <<domain>>
+participant ": WeatherEvent"                         as Event      <<domain>>
+participant ": WeatherEventRESTService"              as WeatherEventRESTService      <<adapter>>
+participant ": TranslationService"              as TranslationService      <<adapter>>
+end box
+
+box Users - Bounded Context #FF
+participant ": UserRESTController"            as UserRESTController        <<adapter>>
+end box
+
+Actor -> ReportRESTController ++                        : uploadWeatherReport(\n    details,\n    picture,\n    userId)
+ReportRESTController -> ReportApplicationService ++     : uploadWeatherReport(d, p, uId)
+deactivate ReportRESTController
+
+ReportApplicationService -> ReportRepository ++         : provideIdentity()
+deactivate ReportRepository
+
+ReportApplicationService --> Report **                  : report = create(rId, d, p, uId)
+activate Report
+Report -> TranslationService ++                         : validateUserMaySubmitReport(uId)
+TranslationService -> UserRESTController ++             : validateUserMaySubmitReport(uId)
+deactivate UserRESTController
+deactivate TranslationService
+
+Report --> Data **                                      : data = create(d)
+activate Data
+Data -> Data                                            : wind_data = extractWindData(d)
+Data -> Data                                            : temp_data = extractTempData(d)
+Data -> Data                                            : loc_data = extractLocData(d)
+
+Data --> WindData **                                    : create(wind_data)
+Data --> TemperatureData **                             : create(temp_data)
+Data --> Location **                                    : create(loc_data)
+deactivate Data
+
+Report -> Data ++                                       : getLocation()
+deactivate Data
+
+Report -> EventRepository ++                            : event = matchToWeatherEvent(location, dateTime)
+EventRepository --> Event **                            : create()
+deactivate EventRepository
+
+Report -> Event ++                                      : updateLatestReport()
+Event -> Event  ++                                      : calculateCurrentWeather()
+deactivate Event
+deactivate Event
+Report -> WeatherEventRESTService ++                    : provideUpdate(uId, event)
+deactivate Report
+deactivate WeatherEventRESTService
+
+ReportApplicationService -> Report ++                   : event = getEvent()
+deactivate Report
+ReportApplicationService -> ReportRepository ++         : store(report)
+deactivate ReportRepository
+ReportApplicationService -> EventRepository ++          : store(event)
+deactivate EventRepository
+deactivate ReportApplicationService
+@enduml
