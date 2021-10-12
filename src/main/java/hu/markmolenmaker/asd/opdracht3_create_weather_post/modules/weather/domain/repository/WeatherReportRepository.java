@@ -6,7 +6,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface WeatherReportRepository extends JpaRepository<WeatherReport, Long> {
 
     long provideIdentity();
-    
+
     void store(WeatherReport report);
 
+    WeatherReport getWeatherReport(String id);
 }

@@ -1,10 +1,8 @@
 package hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.adapter;
 
 import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.application.WeatherApplicationService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.domain.report.WeatherReport;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/api/weather")
@@ -21,6 +19,11 @@ public class WeatherRESTController {
                 weatherReportDTO.details,
                 weatherReportDTO.picture,
                 weatherReportDTO.userId);
+    }
+
+    @GetMapping
+    public WeatherReport findWeatherReport(String id, String userId) {
+        return weatherApplicationService.findWeatherReport(id, userId);
     }
 
     private static class WeatherReportDTO {
