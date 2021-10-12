@@ -10,7 +10,7 @@ public class TranslationService {
 
     }
 
-    public boolean validateUserMaySubmitReport(String userId) {
+    public boolean validateUserMaySubmitReport(long userId) {
         return userRESTController.validateUserMaySubmitReport(userId);
     }
 

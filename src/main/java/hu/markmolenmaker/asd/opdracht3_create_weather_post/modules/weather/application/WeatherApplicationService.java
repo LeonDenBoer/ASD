@@ -8,6 +8,8 @@ import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.domai
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Map;
+
 @Transactional
 @Service
 public class WeatherApplicationService {
@@ -22,9 +24,9 @@ public class WeatherApplicationService {
         this.weatherEventRepository = weatherEventRepository;
     }
 
-    public void uploadWeatherReport(String details, String picture, String userId) {
+    public void uploadWeatherReport(long userId, String picture, Map<String, Object> details) {
         long identity = weatherReportRepository.provideIdentity();
-        WeatherReport report = new WeatherReport(identity, details, picture, userId);
+        WeatherReport report = new WeatherReport(identity, userId, picture, details);
         WeatherEvent event = report.getWeatherEvent();
 
         weatherReportRepository.store(report);

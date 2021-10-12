@@ -2,7 +2,10 @@ package hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.adap
 
 import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.application.WeatherApplicationService;
 import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.domain.report.WeatherReport;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/weather")
@@ -14,11 +17,12 @@ public class WeatherRESTController {
     }
 
     @PostMapping
-    public void uploadWeatherReport(@RequestBody WeatherReportDTO weatherReportDTO) {
+    public ResponseEntity<String> uploadWeatherReport(@RequestBody WeatherReportDTO weatherReportDTO) {
         weatherApplicationService.uploadWeatherReport(
-                weatherReportDTO.details,
+                weatherReportDTO.userId,
                 weatherReportDTO.picture,
-                weatherReportDTO.userId);
+                weatherReportDTO.details);
+        return ResponseEntity.ok("Uploaded WeatherReport Successfully");
     }
 
     @GetMapping
@@ -26,9 +30,16 @@ public class WeatherRESTController {
         return weatherApplicationService.findWeatherReport(id, userId);
     }
 
-    private static class WeatherReportDTO {
-        private String details;
-        private String picture;
-        private String userId;
+    public static class WeatherReportDTO {
+        private final long userId;
+        private final String picture;
+        private final Map<String, Object> details;
+
+        public WeatherReportDTO(long userId, String picture, Map<String, Object> details) {
+            this.userId = userId;
+            this.picture = picture;
+            this.details = details;
+        }
     }
+
 }
