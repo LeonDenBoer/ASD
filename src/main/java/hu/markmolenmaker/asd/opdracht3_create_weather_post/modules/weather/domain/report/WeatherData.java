@@ -1,36 +1,55 @@
 package hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.domain.report;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import java.util.Map;
+
+@Entity
 public class WeatherData {
+
+    @Id
+    private String jpaId;
 
     private double airPressure;
     private double airHumidity;
+    @OneToOne
     private WindData windData;
+    @OneToOne
     private TemperatureData temperatureData;
+    @OneToOne
     private Location location;
 
-    public WeatherData(String details) {
-        String wind_data = extractWindData(details);
-        String temp_data = extractTempData(details);
-        String loc_data = extractLocData(details);
-
-        this.windData = new WindData(wind_data);
-        this.temperatureData = new TemperatureData(temp_data);
-        this.location = new Location(loc_data);
+    public WeatherData(Map<String, Object> details) {
+        this.airPressure = (double) details.get("airPressure");
+        this.airHumidity = (double) details.get("airHumidity");
+        this.windData = new WindData(details);
+        this.temperatureData = new TemperatureData(details);
+        this.location = new Location(details);
     }
 
-    private String extractTempData(String details) {
-        return "airtemperature_20.0_celsius;groundtemperature_10.0_celsius;";
-    }
+    public WeatherData() {
 
-    private String extractWindData(String details) {
-        return "windspeed_2.0_mps;winddirection_NORTH;";
-    }
-    private String extractLocData(String details) {
-        return "0.12300302;1.29238873";
     }
 
     public Location getLocation() {
         return location;
+    }
+
+    public WindData getWindData() {
+        return windData;
+    }
+
+    public TemperatureData getTemperatureData() {
+        return temperatureData;
+    }
+
+    public double getAirPressure() {
+        return airPressure;
+    }
+
+    public double getAirHumidity() {
+        return airHumidity;
     }
 
 }

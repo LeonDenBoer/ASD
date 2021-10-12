@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/user")
 public class UserRESTController {
 
-    public boolean validateUserMaySubmitReport(String userId) {
-        return !userId.isBlank();   // Validates every userId as valid if it contains some value.
+    public boolean validateUserMaySubmitReport(long userId) {
+        return true;   // Validates every userId as valid if it contains some value.
     }
 
 }
