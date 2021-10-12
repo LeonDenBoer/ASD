@@ -17,9 +17,9 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.HashMap;
 
-
 @SpringBootTest
 @AutoConfigureMockMvc
+/* Mark Molenmaker */
 public class UploadWeatherReportTests {
 
     private final WeatherRESTController.WeatherReportDTO requestBody = new WeatherRESTController.WeatherReportDTO(
