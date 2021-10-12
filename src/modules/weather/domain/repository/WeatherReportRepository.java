@@ -1,7 +1,10 @@
 package modules.weather.domain.repository;
 
+import modules.weather.domain.report.WeatherReport;
+
 public interface WeatherReportRepository {
 
-    String provideIdentity();
+    int provideIdentity();
+    void store(WeatherReport report);
 
 }
