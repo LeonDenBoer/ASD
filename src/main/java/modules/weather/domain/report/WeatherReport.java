@@ -1,6 +1,6 @@
 package modules.weather.domain.report;
 
-import modules.users.adapter.UserRESTController;
+import modules.user.adapter.UserRESTController;
 
 public class WeatherReport {
 
