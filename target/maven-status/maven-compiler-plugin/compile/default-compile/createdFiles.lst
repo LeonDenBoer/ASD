@@ -1,0 +1,12 @@
+modules\weather\application\WeatherReportApplicationService.class
+modules\weather\adapter\WeatherReportRESTController.class
+modules\weather\application\WeatherEventApplicationService.class
+modules\weather\domain\report\TemperatureData.class
+modules\weather\domain\report\WeatherData.class
+modules\weather\domain\event\WeatherEvent.class
+modules\weather\domain\report\WindData.class
+modules\weather\adapter\WeatherEventRESTController.class
+modules\weather\domain\repository\WeatherEventRepository.class
+modules\user\adapter\UserRESTController.class
+modules\weather\domain\repository\WeatherReportRepository.class
+modules\weather\domain\report\WeatherReport.class
