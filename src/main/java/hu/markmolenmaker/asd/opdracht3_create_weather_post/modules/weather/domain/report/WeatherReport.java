@@ -1,8 +1,10 @@
 package hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.domain.report;
 
+import hu.markmolenmaker.asd.opdracht3_create_weather_post.SpringConfiguration;
 import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.adapter.TranslationService;
 import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.adapter.WeatherRESTService;
 import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.domain.event.WeatherEvent;
+import hu.markmolenmaker.asd.opdracht3_create_weather_post.modules.weather.domain.repository.WeatherEventRepository;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -14,9 +16,11 @@ import java.util.Map;
 public class WeatherReport {
 
     @Transient
-    private TranslationService translationService = new TranslationService();
+    private final TranslationService translationService = new TranslationService();
     @Transient
-    private WeatherRESTService weatherRESTService = new WeatherRESTService();
+    private final WeatherRESTService weatherRESTService = new WeatherRESTService();
+    @Transient
+    private final WeatherEventRepository weatherEventRepository = (WeatherEventRepository) SpringConfiguration.contextProvider().getApplicationContext().getBean("weatherEventRepository");
 
     @Id
     private long id;
@@ -38,7 +42,7 @@ public class WeatherReport {
 
         this.weatherData = new WeatherData(details);
 
-        //this.weatherEvent = weatherEventRepository.matchToWeatherEvent(this.weatherData.getLocation(), this.recordedAt);
+        this.weatherEvent = weatherEventRepository.matchToWeatherEvent(this.weatherData.getLocation(), this.recordedAt);
         weatherEvent.updateLatestReport(this);
 
         weatherRESTService.provideUpdate(userId, weatherEvent);

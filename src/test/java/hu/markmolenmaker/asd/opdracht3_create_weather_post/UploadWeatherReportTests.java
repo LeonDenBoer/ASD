@@ -59,4 +59,10 @@ public class UploadWeatherReportTests {
         assertThat(response.getStatusCode()).isEqualTo(HttpStatus.OK);
     }
 
+    @Test
+    public void testInvalidWeatherReportUploadReturnsStatus200() {
+        ResponseEntity<String> response = weatherRESTController.uploadWeatherReport(null);
+        assertThat(response.getStatusCode()).isEqualTo(HttpStatus.BAD_REQUEST);
+    }
+
 }

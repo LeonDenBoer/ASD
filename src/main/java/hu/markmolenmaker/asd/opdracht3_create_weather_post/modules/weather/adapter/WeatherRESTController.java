@@ -20,11 +20,15 @@ public class WeatherRESTController {
 
     @PostMapping
     public ResponseEntity<String> uploadWeatherReport(@RequestBody WeatherReportDTO weatherReportDTO) {
-        weatherApplicationService.uploadWeatherReport(
-                weatherReportDTO.userId,
-                weatherReportDTO.picture,
-                weatherReportDTO.details);
-        return ResponseEntity.ok("Uploaded WeatherReport Successfully");
+        try {
+            weatherApplicationService.uploadWeatherReport(
+                    weatherReportDTO.userId,
+                    weatherReportDTO.picture,
+                    weatherReportDTO.details);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body("Upload of WeatherReport failed!");
+        }
+        return ResponseEntity.ok("Uploaded WeatherReport Successfully!");
     }
 
     public static class WeatherReportDTO {
